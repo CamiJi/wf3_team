@@ -59,7 +59,7 @@
 
 
     <form method="POST" id="formInscription" action="registerHandler.php">
-    
+
         <?php if(isset($_SESSION['registerErrors'])): ?>
             <div class="alert alert-danger">
                 <?php foreach($_SESSION['registerErrors'] as $keyError => $error): ?>
@@ -68,6 +68,14 @@
             </div>
         <!-- Supprime les erreurs après les avoir affiché 1 fois -->
                 <?php unset($_SESSION['registerErrors']); ?>
+        <?php endif; ?>
+
+
+
+         <?php if(isset($_SESSION['user'])): ?>
+            <div class="alert alert-info">
+                <p><?php echo " Votre inscription est réussie vous pouvez vous connecter sur la page d'acceuil"; ?></p>
+            </div>
         <?php endif; ?>
 
         <div class="form-group">
