@@ -68,6 +68,7 @@
                         <div class="form-group">
                             <label for="search">Plateforme</label>
                             <select class="form-control" id="category" name="category">
+                                
                             </select>
                         </div>
 

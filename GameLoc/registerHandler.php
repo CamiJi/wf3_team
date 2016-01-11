@@ -203,9 +203,8 @@
 				unset($resultUser['password']);
 				$_SESSION['user'] = $resultUser;
 
-				// On redirige l'utilisateur vers la page protégé profile.php
+				// On redirige l'utilisateur vers la page protégé formulaire.php
 				header("Location: formulaire.php");
-				$_SESSION['InscriptionOk'] = "Merci pour votre inscription, connectez vous sur la page d'acceuil";
 				die();
 			}
 		}
