@@ -1,0 +1,69 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+/*	Eléments graphiques du header tout est centré*/
+
+#header {
+	text-align: center;
+	margin: 0 auto;
+	width: 100%;
+}
+
+/*Réduction de la taille de font de p*/
+
+#header  p {
+	font-size: 16px;
+} 
+
+
+
+/*Page index*/
+/*Ajustement de l'espace entre les boutons de la page Index*/
+/*
+#header a {
+	margin: 8px;
+}*/
+
+
+
+
+
+
+
+
+
+
+/*Page connexion*/
+/*Ajustement de la largeur des champs du formulaire*/
+
+#formInscription {
+	margin: 0 auto;
+	width: 50%;
+}
+
+/*Ajustement de l'espace entre les champs des div et du boutons*/
+#formInscription div {
+	margin: 15px;
+}
+
+#formInscription button {
+	margin: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
