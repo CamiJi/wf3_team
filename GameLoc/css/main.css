@@ -21,6 +21,41 @@
 
 
 
+/*Page index*/
+/*Ajustement de l'espace entre les boutons de la page Index*/
+
+#header a {
+	margin: 8px;
+}
+
+
+
+
+
+
+
+
+
+
+/*Page connexion*/
+/*Ajustement de la largeur des champs du formulaire*/
+
+#formConnexion {
+	margin: 0 auto;
+	width: 50%;
+}
+
+/*Ajustement de l'espace entre les champs des div et du boutons*/
+#formConnexion div {
+	margin: 15px;
+}
+
+#formConnexion button {
+	margin: 15px;
+}
+
+
+
 
 
 
