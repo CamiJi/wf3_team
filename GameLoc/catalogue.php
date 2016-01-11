@@ -1,12 +1,8 @@
 <<?php 
 
-
-
 // Mise en place de la logique de session utilisateur
 
     session_start();
-
-
 
  ?>
 
@@ -27,7 +23,7 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
 
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/catalogue.css">
 
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
@@ -56,22 +52,45 @@
             <p>Catalogue de jeux!</p>
           </div>
     </div>
-
-    <div class=" container">
  
         <div class="row">
             
-            <div class="col-md-4">
+            <div class="col-md-2">
                 
+                <div id="searchForm">
+                 <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+
+                        <div class="form-group">
+                            <label for="search">Rechercher</label>
+                            <input type="text" class="form-control" id="search" name="search" palceholder="titre, description..." value="<?php if(isset($_GET['search'])) echo $_GET['search'] ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="search">Plateforme</label>
+                            <select class="form-control" id="category" name="category">
+                            </select>
+                        </div>
+
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox"> Disponible de suite</label>
+                          </div>
+
+                        <button class="btn btn-primary" action="send" value="search">Rechercher</button>
+
+                    </form>
+                </div>
+
+
+
             </div><!-- Fin de la colonne User -->
 
 
-            <div class="col-md-8">
+            <div class="col-md-10">
             
             </div><!-- Fin de la colonne de jeux-->
 
         </div><!-- Fin de la Row-->
-    </div><!-- Fin du container -->
 
    
 
