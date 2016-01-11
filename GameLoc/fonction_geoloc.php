@@ -5,7 +5,7 @@
 // champs lat: DECIMAL(10,8)
 // champs longitude: DECIMAL(11.8)
 
-function geocode($address){
+function geocode($address){ 
 
 	// Url de l'appli http://maps.google.com/maps/api/geocode/json?address=
 
