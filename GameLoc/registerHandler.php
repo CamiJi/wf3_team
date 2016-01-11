@@ -3,6 +3,8 @@
 
 	require(__DIR__.'/config/db.php');
 
+	include(__DIR__.'')
+
 
 	// Vérifie que le button submit a été cliqué
 	if(isset($_POST['action'])) {
@@ -10,6 +12,12 @@
 		$email = trim(htmlentities($_POST['formEmail']));
 		$password = trim(htmlentities($_POST['formPassword']));
 		$passwordConfirm = trim(htmlentities($_POST['formPasswordConfirme']));
+		$nom = trim(htmlentities($_POST['formNom']));
+		$prenom = trim(htmlentities($_POST['formPrenom']));
+		$adresse = trim(htmlentities($_POST['formAdresse']));
+		$codePostal = trim(htmlentities($_POST['formCodePostal']));
+		$ville = trim(htmlentities($_POST['formVille']));
+		$phone = trim(htmlentities($_POST['formPhone']));
 
 		// Initialisation d'un tableau d'erreurs
 		$errors = [];
@@ -59,15 +67,106 @@
 			}
 		}
 
+
+		// Check du champs nom
+		
+		$nameRegex = preg_match('/[a-zA-Z]{4,14}/', $nom);
+			// Le password contient au moins un chiffre ?
+		$containsDigit  = preg_match('/\d/', $nom);
+			// Le password contient au moins un autre caractère ?
+		$containsSpecial= preg_match('/[^a-zA-Z\d]/', $nom);
+
+			// Si une des conditions n'est pas remplie ... erreur
+			if($containsDigit || $containsSpecial) {
+				$errors['nom'] = "Le nom ne peut pas contenir de chiffre ou de caractères spéciaux.";
+			}
+			elseif (!$nameRegex) {
+				$errors['nom'] = "Le nom doit être composé de 4 à 14 caractères alpha.";
+			}
+		
+
+
+
+		// Check du champs prénom
+		
+		$firstNameRegex = preg_match('/[a-zA-Z]{4,14}/', $prenom);
+			// Le password contient au moins un chiffre ?
+		$containsDigit  = preg_match('/\d/', $prenom);
+			// Le password contient au moins un autre caractère ?
+		$containsSpecial= preg_match('/[^a-zA-Z\d]/', $prenom);
+
+			// Si une des conditions n'est pas remplie ... erreur
+			if($containsDigit || $containsSpecial) {
+				$errors['prenom'] = "Le prénom ne peut pas contenir de chiffre ou de caractères spéciaux.";
+			}
+			elseif (!$firstNameRegex) {
+				$errors['prenom'] = "Le prénom doit être composé de 4 à 14 caractères alpha.";
+			}
+
+
+
+		// Check du champs code Postale
+		
+		$postalRegex = preg_match("/^[0-9]{5}$/", $codePostal);
+
+
+			// Si une des conditions n'est pas remplie ... erreur
+			if(!$postalRegex) {
+				$errors['codePostal'] = "Entrez un code postale valide";
+			}
+
+
+		// Check du champs ville
+		
+		$cityRegex = preg_match('/[a-zA-Z]{4,14}/', $ville);
+			// Le password contient au moins un chiffre ?
+		$containsDigit  = preg_match('/\d/', $ville);
+			// Le password contient au moins un autre caractère ?
+		$containsSpecial= preg_match('/[^a-zA-Z\d]/', $ville);
+
+			// Si une des conditions n'est pas remplie ... erreur
+			if($containsDigit || $containsSpecial) {
+				$errors['ville'] = "Le ville ne peut pas contenir de chiffre ou de caractères spéciaux.";
+			}
+			elseif (!$cityRegex) {
+				$errors['ville'] = "Le ville doit être composé de 4 à 14 caractères alpha.";
+			}
+
+
+		// Check du champs code Postale
+		
+		$postalRegex = preg_match("/^[0-9]{10}$/", $phone);
+
+
+			// Si une des conditions n'est pas remplie ... erreur
+			if(!$postalRegex) {
+				$errors['phone'] = "Entrez un numéro de téléphone valide";
+			}
+
+
+
+
+
 		// S'il a pas d'erreurs, j'enregistre l'utilisateur en bdd
 		if(empty($errors)) {
-			$query = $pdo->prepare('INSERT INTO users(email, password, created_at, updated_at) VALUES(:email, :password, NOW(), NOW())');
+			$query = $pdo->prepare('INSERT INTO users(email, password, created_at, updated_at, name, firstname, address, zipcode, city, tel) 
+									VALUES(:email, :password, NOW(), NOW(), :name, :firstname, :address, :zipcode, :city, :tel)');
 			$query->bindValue(':email', $email, PDO::PARAM_STR);
 
 			// Hash du password pour la sécurité
 			// Attention, PHP 5.5 ou plus !!! - Sinon, depuis 5.3.7 : https://github.com/ircmaxell/password_compat
 			$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 			$query->bindValue(':password', $hashedPassword, PDO::PARAM_STR);
+
+
+			$query->bindValue(':name', $nom, PDO::PARAM_STR);
+			$query->bindValue(':firstname', $prenom, PDO::PARAM_STR);
+			$query->bindValue(':address', $adresse, PDO::PARAM_STR);
+			$query->bindValue(':zipcode', $codePostal, PDO::PARAM_STR);
+			$query->bindValue(':city', $ville, PDO::PARAM_STR);
+			$query->bindValue(':tel', $phone, PDO::PARAM_STR);
+
+
 			$query->execute();
 
 			// L'utilisateur a t-il été bien inséré en bdd ?
