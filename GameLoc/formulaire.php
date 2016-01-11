@@ -36,7 +36,7 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron" id="header">
       <div class="container">
-        <a href="index.html"><img src="img/Steam-icon.png"></a>
+        <a href="index.php"><img src="img/Steam-icon.png"></a>
         <h1>Gameloc</h1>
 
       </div>
