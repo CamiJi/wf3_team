@@ -1,8 +1,13 @@
 <<?php 
 
+
+
 // Mise en place de la logique de session utilisateur
 
     session_start();
+
+
+
  ?>
 
 
@@ -45,50 +50,30 @@
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron" id="header">
-      <div class="container">
-        <a href="index.php"><img src="img/Steam-icon.png" ></a>
-        <h1>Gameloc</h1>
-        <p>Connexion!</p>
-      </div>
+          <div class="container">
+            <a href="index.php"><img src="img/Steam-icon.png" ></a>
+            <h1>Gameloc</h1>
+            <p>Catalogue de jeux!</p>
+          </div>
     </div>
 
-
-    <div class="container">
-
-
-
-        <form id="formConnexion" method="POST" action="loginHandler.php">
-
-        <!-- Affiche les erreurs stockés en session avec la clé loginErrors -->
-        <?php if(isset($_SESSION['loginErrors'])): ?>
-            <div class="alert alert-danger">
-                <?php foreach ($_SESSION['loginErrors'] as $keyError => $error): ?>
-                    <p><?php echo $error; ?></p>
-                <?php endforeach; ?>
-            </div>
-        <!-- Supprime les erreurs après les avoir affiché 1 fois -->
-                <?php unset($_SESSION['loginErrors']); ?>
-                <?php endif; ?>
-
+    <div class=" container">
+ 
+        <div class="row">
+            
+            <div class="col-md-4">
                 
-          <div class="form-group">
-            <label for="inputEmail1">Email</label>
-            <input type="email" class="form-control" id="inputEmail1" name="inputEmail1" placeholder="Email">
-          </div>
-          <div class="form-group">
-            <label for="inputPassword1">Mot de Passe</label>
-            <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password">
-          </div>
-          <button type="submit" name="action" class="btn btn-primary">Connexion</button>
-        </form>
-        
+            </div><!-- Fin de la colonne User -->
+
+
+            <div class="col-md-8">
+            
+            </div><!-- Fin de la colonne de jeux-->
+
+        </div><!-- Fin de la Row-->
     </div><!-- Fin du container -->
 
-
-
-
-
-
+   
 
 
 
