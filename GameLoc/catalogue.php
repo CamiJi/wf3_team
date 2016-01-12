@@ -1,13 +1,39 @@
 <?php 
 
-// Mise en place de la logique de session utilisateur
+    // Mise en place de la logique de session utilisateur
 
     session_start();
 
     require_once(__DIR__.'/config/db.php');
 
+    //Ici on va faire inclure la liste des consoles dans la liste à puce
+        $query = $pdo->prepare('SELECT * FROM platforms');
+        $query->execute();
+        $allPlatforms = $query->fetchAll();
 
-    // Ici on va chercher à faire la PAGINATION
+
+    
+
+
+    //Ici on bloque la logique en cas de recherche
+    if(isset($_GET['gameSearch'])){
+        $gameSearch = $_GET['gameSearch'];
+
+        $query = $pdo->prepare('SELECT games.*,
+                                platforms.name as platform_name
+                                FROM games INNER JOIN platforms ON platform_id = platforms.id 
+                                WHERE title LIKE :gameSearch');
+        $query->bindValue(':gameSearch', '%'.$gameSearch.'%' , PDO::PARAM_STR);
+        $query->execute();
+
+        $games = $query->fetchAll();
+
+    }
+
+
+    else{
+        
+        // Ici on va chercher à faire la PAGINATION pour la totalité des résultats
         // 1. Grâce à une query et la fonction SQL COUNT, récuperer le nombre total de games dans ma bdd
         $query = $pdo->query('SELECT COUNT(*) AS total FROM games');
         $countGames = $query->fetch();
@@ -29,27 +55,28 @@
         // 7. Créer la variable $offsetGames et la binder dans la requête SQL
         $offsetGames = ($pageActiveGame - 1) * $limitGames;
 
-        // 4. Construire la requête sql pour récupérer les 100 premiers users 
+        // 4. Construire la requête sql pour récupérer les 100 premiers games 
         // (tester avec phpMyAdmin)
         // Requete SQL : SELECT * FROM users LIMIT 100 OFFSET 0;
-        $query = $pdo->prepare('SELECT * FROM games LIMIT :limit OFFSET :offset');
+       
+        $query = $pdo->prepare('SELECT games.*, 
+                                platforms.name as platform_name 
+                                FROM games INNER JOIN platforms ON platform_id = platforms.id 
+                                LIMIT :limit OFFSET :offset');
+
+        // SELECT games.*    -   sélectionne moi tout dans games   
+        //  platforms.name as platform_name  - renomme moi la colonne name de la table platforms en platform_name
+        //  FROM games INNER JOIN platforms ON platform_id = platforms.id   - de la table games fait moi une liaison avec la table platforms ou tu lieras la colonne platform_id avec la colonne id de platforms
+
+
+
         $query->bindValue(':limit', $limitGames, PDO::PARAM_INT);
         $query->bindValue(':offset', $offsetGames, PDO::PARAM_INT);
         $query->execute();
-
         $games = $query->fetchAll();
 
 
-
-
-
-
-    //Ici on va faire inclure la liste des consoles dans la liste à puce
-        $query = $pdo->prepare('SELECT * FROM platforms');
-        $query->execute();
-        $allPlatforms = $query->fetchAll();
-
-
+    }
 
  ?>
 
@@ -79,18 +106,6 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-
-
-        <!-- Exemple d'Input de connexion "Email" + "Password" -->
-        <!-- <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form> -->
-
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron" id="header">
       <div class="container">
@@ -109,12 +124,14 @@
 
             <div class="form-group">
                 <label for="search">Rechercher</label>
-                <input type="text" class="form-control" id="search" name="search" palceholder="titre, description..." value="<?php if(isset($_GET['search'])) echo $_GET['search'] ?>">
+                <input type="text" class="form-control" id="search" name="gameSearch" palceholder="titre, description..." value="<?php if(isset($_GET['search'])) echo $_GET['search'] ?>">
             </div>
 
             <div class="form-group">
                 <label for="search">Plateforme</label>
-                <select class="form-control" id="category" name="category">
+                <select class="form-control" id="category" name="gamePlatform">
+
+                        <option>       </option>
 
                     <?php foreach ($allPlatforms as $keyplatforms => $platform): ?>
                         <option><?php echo $platform['name'] ?></option>
@@ -123,14 +140,12 @@
                 </select>
             </div>
 
-
-
             <div class="checkbox">
                 <label>
-                  <input type="checkbox"> Disponible de suite</label>
+                  <input type="checkbox" name="available"> Disponible de suite</label>
               </div>
 
-              <button class="btn btn-primary" action="search" value="search">Rechercher</button>
+              <button class="btn btn-primary" type="submit" action="action" value="search">Rechercher</button>
 
           </form>
       </div>
@@ -160,6 +175,7 @@
                         <p><?php echo $game['description']; ?></p>
                         <p>Nb d'heure max: <?php echo $game['game_time']; ?></p>
                         <p>Date de sortie: <?php echo $game['released_date']; ?></p>
+                        <span class="label label-primary"><?php echo $game['platform_name'] ?></span>
 
                     </div><!-- Fin de la div col-md-3 Game 1-->
                 <?php endforeach; ?>
@@ -173,32 +189,31 @@
 
     </div><!-- Fin du container Games-->
 
-    <div = "container"> 
-        <div class="row" id="row3"></div>
-            <div class=".col-xs-6 .col-md-4">   
-                <ul class="pagination" id="paginationCatalogue">
-                    <!-- 8. Mettre la pagination suivante > et précédente > -->
-                    <?php if($pageActiveGame > 1): ?>
-                        <li><a href="catalogue.php?page=<?php echo $pageActiveGame - 1; ?>"><</a></li>
-                    <?php endif; ?>
 
-                    <!-- 3. Construire la pagination pour n nombre de page $pageGames -->
-                    <?php for($i=1; $i <= $pagesGames; $i++): ?> 
-                        <li class="<?php if($pageActiveGame == $i) echo 'active'; ?>"><a href="catalogue.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-                    <?php endfor; ?>
+    <?php if(empty($_GET['gameSearch'])): ?>
+        <div = "container"> 
+            <div class="row" id="row3"></div>
+                <div class=".col-xs-6 .col-md-4">   
+                    <ul class="pagination" id="paginationCatalogue">
+                        <!-- 8. Mettre la pagination suivante > et précédente > -->
+                        <?php if($pageActiveGame > 1): ?>
+                            <li><a href="catalogue.php?page=<?php echo $pageActiveGame - 1; ?>"><</a></li>
+                        <?php endif; ?>
 
-                    <?php if($pageActiveGame < $pagesGames): ?>
-                        <li><a href="catalogue.php?page=<?php echo $pageActiveGame + 1; ?>">></a></li>
-                    <?php endif; ?>
-                </ul>
+                        <!-- 3. Construire la pagination pour n nombre de page $pageGames -->
+                        <?php for($i=1; $i <= $pagesGames; $i++): ?> 
+                            <li class="<?php if($pageActiveGame == $i) echo 'active'; ?>"><a href="catalogue.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                        <?php endfor; ?>
+
+                        <?php if($pageActiveGame < $pagesGames): ?>
+                            <li><a href="catalogue.php?page=<?php echo $pageActiveGame + 1; ?>">></a></li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </div><!-- Fin du container Pagination-->
-
-
-
-
-</div><!-- Fin de la Row1-->
+        </div><!-- Fin du container Pagination-->
+    <?php endif; ?>    
+</div><!-- Fin de la Row 1-->
 
 
 
