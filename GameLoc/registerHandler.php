@@ -4,8 +4,8 @@
 	require(__DIR__.'/config/db.php');
 
 
-	// on appelle la fonction Geoloc dans un fichier à part
-	include(__DIR__.'/fonction_geoloc.php');
+	// on appelle les fonctions dont Geoloc dans un fichier à part
+	include(__DIR__.'/functions.php');
 
 
 	// Vérifie que le button submit a été cliqué

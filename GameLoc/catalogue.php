@@ -1,4 +1,4 @@
-<<?php 
+<?php 
 
 // Mise en place de la logique de session utilisateur
 
