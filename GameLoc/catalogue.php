@@ -55,7 +55,7 @@
  
         <div class="row">
             
-            <div class="col-md-2">
+            <div class="col-md-3">
                 
                 <div id="searchForm">
                  <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -87,7 +87,7 @@
             </div><!-- Fin de la colonne User -->
 
 
-            <div class="col-md-10">
+            <div class="col-md-9">
             
             </div><!-- Fin de la colonne de jeux-->
 
