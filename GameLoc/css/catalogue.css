@@ -46,7 +46,6 @@
 
 #searchForm {
 	background-color: #EEEEEE;
-	margin: 30px;
 	padding: 5px;
 
 }
@@ -59,6 +58,19 @@
 #searchForm button {
 	margin-left: 15px;
 }
+
+
+#row1 {
+	margin: 30px;
+
+}
+
+#paginationCatalogue{
+	margin-top: 50px;
+
+}
+
+
 
 
 

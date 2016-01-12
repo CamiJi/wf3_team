@@ -17,6 +17,11 @@
 		die();
 	}
 
+	// Compter le nbr. de users en bdd
+	$query = $pdo->query('SELECT count(id) AS total FROM users');
+	$resultCount = $query->fetch();
+	$totalUser = $reseultCount['total'];//Afficher cela dans la page Admin
 
+	
 
 ?>

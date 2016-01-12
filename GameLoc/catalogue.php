@@ -4,6 +4,43 @@
 
     session_start();
 
+    require_once(__DIR__.'/config/db.php');
+
+
+    // Ici on va chercher à faire la PAGINATION
+        // 1. Grâce à une query et la fonction SQL COUNT, récuperer le nombre total de games dans ma bdd
+        $query = $pdo->query('SELECT COUNT(*) AS total FROM games');
+        $countGames = $query->fetch();
+        $totalGames = $countGames['total']; 
+
+        // 2. Trouver la fonction qui arrondi une décimal à son entier supérieur et utiliser la 
+        // fonction ceil
+        $limitGames = 4;
+        $pagesGames = ceil($totalGames / $limitGames);
+
+        // 6. Récupérer la variable page envoyée en GET et l'affecter à $pageActiveGame
+        if(isset($_GET['page'])) {
+            $pageActiveGame = $_GET['page'];
+        }
+        else {
+            $pageActiveGame = 1;
+        }
+
+        // 7. Créer la variable $offsetGames et la binder dans la requête SQL
+        $offsetGames = ($pageActiveGame - 1) * $limitGames;
+
+        // 4. Construire la requête sql pour récupérer les 100 premiers users 
+        // (tester avec phpMyAdmin)
+        // Requete SQL : SELECT * FROM users LIMIT 100 OFFSET 0;
+        $query = $pdo->prepare('SELECT * FROM games LIMIT :limit OFFSET :offset');
+        $query->bindValue(':limit', $limitGames, PDO::PARAM_INT);
+        $query->bindValue(':offset', $offsetGames, PDO::PARAM_INT);
+        $query->execute();
+
+        $games = $query->fetchAll();
+
+
+
  ?>
 
 
@@ -53,7 +90,7 @@
           </div>
     </div>
  
-        <div class="row">
+        <div class="row" id="row1">
             
             <div class="col-md-3">
                 
@@ -68,6 +105,7 @@
                         <div class="form-group">
                             <label for="search">Plateforme</label>
                             <select class="form-control" id="category" name="category">
+
                                 
                             </select>
                         </div>
@@ -77,7 +115,7 @@
                               <input type="checkbox"> Disponible de suite</label>
                           </div>
 
-                        <button class="btn btn-primary" action="send" value="search">Rechercher</button>
+                        <button class="btn btn-primary" action="search" value="search">Rechercher</button>
 
                     </form>
                 </div>
@@ -88,9 +126,51 @@
 
 
             <div class="col-md-9">
-            
-            </div><!-- Fin de la colonne de jeux-->
 
+                <div class="container" id="containerGames">
+
+
+                        <?php if(!empty($games)): ?>
+
+
+
+                            <?php foreach ($games as $keygames => $game): ?>
+                                
+                                <div class="col-md-3" id="game<?php echo $game['id']; ?>">
+
+                                    <img src="<?php echo $game['img']; ?>" height="100%" width="100%">
+                                    <h4><?php echo $game['title']; ?></h4>
+                                    <p><?php echo $game['description']; ?></p>
+                                    <p>Nb d'heure max: <?php echo $game['game_time']; ?></p>
+                                    <p>Date de sortie: <?php echo $game['released_date']; ?></p>
+
+                                </div><!-- Fin de la div col-md-3 Game 1-->
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+                            <div class="alert alert-danger" role="alert">Aucun jeu dispo dans notre base de données</div>
+
+                        <?php endif; ?>
+
+
+                </div><!-- Fin du container Games-->
+
+                    <ul class="pagination" id="paginationCatalogue">
+                        <!-- 8. Mettre la pagination suivante > et précédente > -->
+                        <?php if($pageActiveGame > 1): ?>
+                            <li><a href="catalogue.php?page=<?php echo $pageActiveGame - 1; ?>"><</a></li>
+                        <?php endif; ?>
+
+                        <!-- 3. Construire la pagination pour n nombre de page $pageGames -->
+                        <?php for($i=1; $i <= $pagesGames; $i++): ?> 
+                            <li class="<?php if($pageActiveGame == $i) echo 'active'; ?>"><a href="catalogue.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                        <?php endfor; ?>
+
+                        <?php if($pageActiveGame < $pagesGames): ?>
+                            <li><a href="catalogue.php?page=<?php echo $pageActiveGame + 1; ?>">></a></li>
+                        <?php endif; ?>
+                    </ul>
+                      
         </div><!-- Fin de la Row-->
 
    
