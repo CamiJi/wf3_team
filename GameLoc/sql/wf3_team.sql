@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 12 Janvier 2016 à 10:38
+-- Généré le :  Mar 12 Janvier 2016 à 15:32
 -- Version du serveur :  5.6.25
 -- Version de PHP :  5.6.11
 
@@ -35,7 +35,18 @@ CREATE TABLE IF NOT EXISTS `games` (
   `released_date` datetime NOT NULL,
   `platform_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `games`
+--
+
+INSERT INTO `games` (`id`, `img`, `title`, `description`, `game_time`, `released_date`, `platform_id`, `user_id`) VALUES
+(13, 'http://www.n-3ds.com/wp-content/uploads/2011/04/3ds-zelda-ocarina-of-time-site-officiel.jpg', 'The Legend of Zelda: Ocarina of Time', 'The Legend of Zelda: Ocarina of Time, est un jeu vidéo d''action-aventure développé par Nintendo EAD et édité par Nintendo. Il est sorti fin 1998 sur Nintendo 64.', 60, '1998-11-21 00:00:00', 7, 1),
+(15, 'http://cdn.supersoluce.com/file/docs/docid_4f71559d8f152f5d660058a2/elemid_4ee9d6ec0a2fe93f0e00000c/final-fantasy-vii-pc.jpg', 'Final Fantasy VII', 'Final Fantasy VII est un jeu vidéo de rôle développé par Square sous la direction de Yoshinori Kitase et sorti en 1997, constituant le septième opus de la série Final Fantasy.', 60, '1997-01-31 00:00:00', 15, 2),
+(16, 'http://musiquesdepub.com/wp-content/uploads/2015/12/dxar5kfrmswtvmet3msb.jpg', 'Just Cause 3', 'Just Cause 3 est un jeu vidéo d''action-aventure développé par Avalanche Studios et édité par Square Enix, sorti le 1?? décembre 2015 sur PlayStation 4, Xbox One et Windows. Il s''agit du troisième opus de la série Just Cause', 30, '2015-12-01 00:00:00', 2, 3),
+(17, 'http://gunxblast.fr/wp-content/uploads/2014/09/ff15prev.jpg', 'FIFA 15', 'FIFA 15 est un jeu vidéo développé par Electronic Arts et édité par EA Sports sorti le 25 septembre 2014. C''est le 21? jeu de la franchise FIFA Football et la suite de FIFA 14.', 99, '2014-09-23 00:00:00', 1, 5),
+(19, 'http://www.rockstargames.com/V/img/global/facebook/index-en_us-480.jpg', 'Grand Theft Auto V', 'Grand Theft Auto V est un jeu vidéo d''action-aventure, développé par Rockstar North et édité par Rockstar Games.', 99, '2013-09-17 00:00:00', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -46,7 +57,29 @@ CREATE TABLE IF NOT EXISTS `games` (
 CREATE TABLE IF NOT EXISTS `platforms` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `platforms`
+--
+
+INSERT INTO `platforms` (`id`, `name`) VALUES
+(1, 'Xbox'),
+(2, 'Playstation 4'),
+(3, 'Wii U'),
+(4, 'Megadrive'),
+(5, 'Wii U'),
+(6, 'Megadrive'),
+(7, 'N64'),
+(8, 'Nes'),
+(9, 'Wii'),
+(10, 'PSone'),
+(11, 'GameBoy'),
+(12, 'N64'),
+(13, 'Nes'),
+(14, 'Wii'),
+(15, 'PSone'),
+(16, 'GameBoy');
 
 -- --------------------------------------------------------
 
@@ -92,7 +125,9 @@ INSERT INTO `users` (`id`, `email`, `password`, `created_at`, `updated_at`, `nam
 ALTER TABLE `games`
   ADD PRIMARY KEY (`id`),
   ADD KEY `platform_id` (`platform_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `platform_id_2` (`platform_id`),
+  ADD KEY `user_id_2` (`user_id`);
 
 --
 -- Index pour la table `platforms`
@@ -114,12 +149,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `games`
 --
 ALTER TABLE `games`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT pour la table `platforms`
 --
 ALTER TABLE `platforms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
@@ -133,7 +168,7 @@ ALTER TABLE `users`
 -- Contraintes pour la table `games`
 --
 ALTER TABLE `games`
-  ADD CONSTRAINT `fk_platforms` FOREIGN KEY (`platform_id`) REFERENCES `platforms` (`id`),
+  ADD CONSTRAINT `fk_platform` FOREIGN KEY (`platform_id`) REFERENCES `platforms` (`id`),
   ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
