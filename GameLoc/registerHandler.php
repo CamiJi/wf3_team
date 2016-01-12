@@ -3,7 +3,9 @@
 
 	require(__DIR__.'/config/db.php');
 
-	include(__DIR__.'')
+
+	// on appelle les fonctions dont Geoloc dans un fichier à part
+	include(__DIR__.'/functions.php');
 
 
 	// Vérifie que le button submit a été cliqué
@@ -121,11 +123,9 @@
 		$cityRegex = preg_match('/[a-zA-Z]{4,14}/', $ville);
 			// Le password contient au moins un chiffre ?
 		$containsDigit  = preg_match('/\d/', $ville);
-			// Le password contient au moins un autre caractère ?
-		$containsSpecial= preg_match('/[^a-zA-Z\d]/', $ville);
 
 			// Si une des conditions n'est pas remplie ... erreur
-			if($containsDigit || $containsSpecial) {
+			if($containsDigit) {
 				$errors['ville'] = "Le ville ne peut pas contenir de chiffre ou de caractères spéciaux.";
 			}
 			elseif (!$cityRegex) {
@@ -149,8 +149,27 @@
 
 		// S'il a pas d'erreurs, j'enregistre l'utilisateur en bdd
 		if(empty($errors)) {
-			$query = $pdo->prepare('INSERT INTO users(email, password, created_at, updated_at, name, firstname, address, zipcode, city, tel) 
-									VALUES(:email, :password, NOW(), NOW(), :name, :firstname, :address, :zipcode, :city, :tel)');
+
+			// on concatène les éléments pour former une variable adresse
+
+			$completeAdresse = $adresse." ".$codePostal." ".$ville;
+
+			//on appelle la fonction Geoloc, on lui donne $completeAdresse comme  attribut et on stock le resultat
+
+			$resultGeoCode = geocode($completeAdresse);
+
+
+			// on récupère chaque valeur latitude et longitude que l'on stocke dans une variable
+
+			$lat=$resultGeoCode['lat'];
+			$lng=$resultGeoCode['lng'];
+
+
+
+			// On insère les données dans la BDD
+
+			$query = $pdo->prepare('INSERT INTO users(email, password, created_at, updated_at, name, firstname, address, zipcode, city, tel, lat, lng) 
+									VALUES(:email, :password, NOW(), NOW(), :name, :firstname, :address, :zipcode, :city, :tel, :lat, :lng)');
 			$query->bindValue(':email', $email, PDO::PARAM_STR);
 
 			// Hash du password pour la sécurité
@@ -165,6 +184,8 @@
 			$query->bindValue(':zipcode', $codePostal, PDO::PARAM_STR);
 			$query->bindValue(':city', $ville, PDO::PARAM_STR);
 			$query->bindValue(':tel', $phone, PDO::PARAM_STR);
+			$query->bindValue(':lat', $lat, PDO::PARAM_STR);
+			$query->bindValue(':lng', $lng, PDO::PARAM_STR);
 
 
 			$query->execute();
@@ -182,7 +203,7 @@
 				unset($resultUser['password']);
 				$_SESSION['user'] = $resultUser;
 
-				// On redirige l'utilisateur vers la page protégé profile.php
+				// On redirige l'utilisateur vers la page protégé formulaire.php
 				header("Location: formulaire.php");
 				die();
 			}
