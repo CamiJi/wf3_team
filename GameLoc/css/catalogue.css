@@ -57,6 +57,7 @@
 
 #searchForm button {
 	margin-left: 15px;
+	margin-bottom: 15px;
 }
 
 
@@ -66,8 +67,7 @@
 }
 
 #paginationCatalogue{
-	margin-top: 50px;
-
+	margin-left: 200px;
 }
 
 

@@ -41,6 +41,16 @@
 
 
 
+
+
+
+    //Ici on va faire inclure la liste des consoles dans la liste à puce
+        $query = $pdo->prepare('SELECT * FROM platforms');
+        $query->execute();
+        $allPlatforms = $query->fetchAll();
+
+
+
  ?>
 
 
@@ -83,98 +93,112 @@
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron" id="header">
-          <div class="container">
-            <a href="index.php"><img src="img/Steam-icon.png" ></a>
-            <h1>Gameloc</h1>
-            <p>Catalogue de jeux!</p>
-          </div>
+      <div class="container">
+        <a href="index.php"><img src="img/Steam-icon.png" ></a>
+        <h1>Gameloc</h1>
+        <p>Catalogue de jeux!</p>
     </div>
- 
-        <div class="row" id="row1">
-            
-            <div class="col-md-3">
-                
-                <div id="searchForm">
-                 <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+</div>
 
-                        <div class="form-group">
-                            <label for="search">Rechercher</label>
-                            <input type="text" class="form-control" id="search" name="search" palceholder="titre, description..." value="<?php if(isset($_GET['search'])) echo $_GET['search'] ?>">
-                        </div>
+<div class="row" id="row1">
 
-                        <div class="form-group">
-                            <label for="search">Plateforme</label>
-                            <select class="form-control" id="category" name="category">
+    <div class="col-md-3">
 
-                                
-                            </select>
-                        </div>
+        <div id="searchForm">
+           <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox"> Disponible de suite</label>
-                          </div>
+            <div class="form-group">
+                <label for="search">Rechercher</label>
+                <input type="text" class="form-control" id="search" name="search" palceholder="titre, description..." value="<?php if(isset($_GET['search'])) echo $_GET['search'] ?>">
+            </div>
 
-                        <button class="btn btn-primary" action="search" value="search">Rechercher</button>
+            <div class="form-group">
+                <label for="search">Plateforme</label>
+                <select class="form-control" id="category" name="category">
 
-                    </form>
-                </div>
+                    <?php foreach ($allPlatforms as $keyplatforms => $platform): ?>
+                        <option><?php echo $platform['name'] ?></option>
+                    <?php endforeach; ?>
+
+                </select>
+            </div>
 
 
 
-            </div><!-- Fin de la colonne User -->
+            <div class="checkbox">
+                <label>
+                  <input type="checkbox"> Disponible de suite</label>
+              </div>
+
+              <button class="btn btn-primary" action="search" value="search">Rechercher</button>
+
+          </form>
+      </div>
 
 
-            <div class="col-md-9">
 
-                <div class="container" id="containerGames">
-
-
-                        <?php if(!empty($games)): ?>
+  </div><!-- Fin de la colonne Recherche -->
 
 
+  <div class="col-md-9">
 
-                            <?php foreach ($games as $keygames => $game): ?>
-                                
-                                <div class="col-md-3" id="game<?php echo $game['id']; ?>">
+    <div class="container" id="containerGames">
 
-                                    <img src="<?php echo $game['img']; ?>" height="100%" width="100%">
-                                    <h4><?php echo $game['title']; ?></h4>
-                                    <p><?php echo $game['description']; ?></p>
-                                    <p>Nb d'heure max: <?php echo $game['game_time']; ?></p>
-                                    <p>Date de sortie: <?php echo $game['released_date']; ?></p>
-
-                                </div><!-- Fin de la div col-md-3 Game 1-->
-                            <?php endforeach; ?>
-
-                        <?php else: ?>
-                            <div class="alert alert-danger" role="alert">Aucun jeu dispo dans notre base de données</div>
-
-                        <?php endif; ?>
+        <div class="row" id="row2">
 
 
-                </div><!-- Fin du container Games-->
+            <?php if(!empty($games)): ?>
 
-                    <ul class="pagination" id="paginationCatalogue">
-                        <!-- 8. Mettre la pagination suivante > et précédente > -->
-                        <?php if($pageActiveGame > 1): ?>
-                            <li><a href="catalogue.php?page=<?php echo $pageActiveGame - 1; ?>"><</a></li>
-                        <?php endif; ?>
 
-                        <!-- 3. Construire la pagination pour n nombre de page $pageGames -->
-                        <?php for($i=1; $i <= $pagesGames; $i++): ?> 
-                            <li class="<?php if($pageActiveGame == $i) echo 'active'; ?>"><a href="catalogue.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-                        <?php endfor; ?>
 
-                        <?php if($pageActiveGame < $pagesGames): ?>
-                            <li><a href="catalogue.php?page=<?php echo $pageActiveGame + 1; ?>">></a></li>
-                        <?php endif; ?>
-                    </ul>
-                      
-        </div><!-- Fin de la Row-->
+                <?php foreach ($games as $keygames => $game): ?>
 
-   
+                    <div class="col-md-3" id="game<?php echo $game['id']; ?>">
 
+                        <img src="<?php echo $game['img']; ?>" height="100%" width="100%">
+                        <h4><?php echo $game['title']; ?></h4>
+                        <p><?php echo $game['description']; ?></p>
+                        <p>Nb d'heure max: <?php echo $game['game_time']; ?></p>
+                        <p>Date de sortie: <?php echo $game['released_date']; ?></p>
+
+                    </div><!-- Fin de la div col-md-3 Game 1-->
+                <?php endforeach; ?>
+
+            <?php else: ?>
+                <div class="alert alert-danger" role="alert">Aucun jeu dispo dans notre base de données</div>
+
+            <?php endif; ?>
+
+        </div><!-- Fin du row 2-->
+
+    </div><!-- Fin du container Games-->
+
+    <div = "container"> 
+        <div class="row" id="row3"></div>
+            <div class=".col-xs-6 .col-md-4">   
+                <ul class="pagination" id="paginationCatalogue">
+                    <!-- 8. Mettre la pagination suivante > et précédente > -->
+                    <?php if($pageActiveGame > 1): ?>
+                        <li><a href="catalogue.php?page=<?php echo $pageActiveGame - 1; ?>"><</a></li>
+                    <?php endif; ?>
+
+                    <!-- 3. Construire la pagination pour n nombre de page $pageGames -->
+                    <?php for($i=1; $i <= $pagesGames; $i++): ?> 
+                        <li class="<?php if($pageActiveGame == $i) echo 'active'; ?>"><a href="catalogue.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                    <?php endfor; ?>
+
+                    <?php if($pageActiveGame < $pagesGames): ?>
+                        <li><a href="catalogue.php?page=<?php echo $pageActiveGame + 1; ?>">></a></li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div><!-- Fin du container Pagination-->
+
+
+
+
+</div><!-- Fin de la Row1-->
 
 
 
