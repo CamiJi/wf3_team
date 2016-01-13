@@ -41,7 +41,7 @@
 
 			if($resultEmail['email']) {
 				$errors['email'] = "Email existant, connectez vous";
-			}
+			
 		}
 
 		// Check du champs password
