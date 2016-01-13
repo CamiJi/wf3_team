@@ -71,15 +71,18 @@
                 <?php endif; ?>
 
                 
-          <div class="form-group">
-            <label for="inputEmail1">Email</label>
-            <input type="email" class="form-control" id="inputEmail1" name="inputEmail1" placeholder="Email">
-          </div>
-          <div class="form-group">
-            <label for="inputPassword1">Mot de Passe</label>
-            <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password">
-          </div>
-          <button type="submit" name="action" class="btn btn-primary">Connexion</button>
+            <div class="form-group">
+                <label for="inputEmail1">Email</label>
+                <input type="email" class="form-control" id="inputEmail1" name="inputEmail1" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword1">Mot de Passe</label>
+                <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <p class="help-block"><a href="forgotPassword.php">Mot de passe oublié ?</a></p>
+            </div>
+                <button type="submit" name="action" class="btn btn-primary">Connexion</button>
         </form>
         
     </div><!-- Fin du container -->

@@ -21,7 +21,7 @@
         $gamePlatform = intval($_POST['gamePlatform']);
 
    
-        if (isset($gameSearch) && isset($gamePlatform)){
+        if (!empty($gameSearch) && !empty($gamePlatform)){
             
             $query = $pdo->prepare('SELECT games.*,
                                     platforms.name as platform_name FROM games 
