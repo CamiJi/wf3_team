@@ -9,6 +9,8 @@
     checkLoggedIn();
     checkAdmin();
 
+    $pageActive = 'admin';
+
     //Ici on va faire afficher la liste des utilisateurs
     $query = $pdo->query('SELECT COUNT(*) AS total FROM users');
     $countUsers = $query->fetch();

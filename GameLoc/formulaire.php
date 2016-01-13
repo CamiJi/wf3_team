@@ -1,6 +1,8 @@
 <?php
     session_start();
 
+    $pageActive = 'formulaire';
+
 ?>
 
 <!doctype html>

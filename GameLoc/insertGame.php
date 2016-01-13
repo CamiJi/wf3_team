@@ -9,6 +9,8 @@
 
     checkLoggedIn();
 
+    $pageActive = 'insertGame';
+
     $imagesDir = 'uploads/';
 
 $images = glob($imagesDir.'*');

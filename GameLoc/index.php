@@ -1,3 +1,9 @@
+<?php
+
+$pageActive = 'index';
+
+?>
+
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -33,7 +39,7 @@
         <h1>Bienvenue sur Gameloc.com</h1>
 
         <p>Bienvenue dans la plus grande communauté de Gamers à Paris!</p>
-        <p>Le service de <b>mise en relation</b> de gamers à des fins d'<b>échanges et de prêts de jeux videos.</b></p>
+        <p>Le service de <b>mise en relation</b> de gamers pour <b>échanger et prêter des jeux videos. (etc., etc.)</b></p>
         <p>(PC,Xbox,PS4)</p>
         <p><a class="btn btn-success" href="formulaire.php" role="button">Inscription</a><a class="btn btn-primary" href="connexion.php" role="button">Connexion</a></p>
 

@@ -1,8 +1,10 @@
-<<?php 
+<?php 
 
 // Mise en place de la logique de session utilisateur
 
     session_start();
+
+    $pageActive = 'connexion';
  ?>
 
 

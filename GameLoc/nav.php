@@ -29,15 +29,16 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class=""><a href="index.php">Accueil</a></li>
+            <li class="<?php if($pageActive == 'index') echo 'active'; ?>"><a href="index.php">Accueil</a></li>
             <li class="<?php if($pageActive == 'catalogue') echo 'active'; ?>"><a href="catalogue.php">Catalogue de Jeux</a></li>
-            <li><a href="insertGame.php">Ajouter un jeu</a></li>
-            <li><a href="admin.php">Admin</a></li>
+            <li class="<?php if($pageActive == 'insertGame') echo 'active'; ?>"><a href="insertGame.php">Ajouter un jeu</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="connexion.php">Sign In</a></li>
-            <li class="active"><a href="index.php">Sign Out <span class="sr-only">(current)</span></a></li>
+            <li class="<?php if($pageActive == 'connexion') echo 'active'; ?>"><a href="connexion.php">Connexion</a></li>
+            <li class="<?php if($pageActive == '#') echo 'active';?>"><a href="#">Déconnexion</a></li>
+            <li class="<?php if($pageActive == 'formulaire') echo 'active';?>"><a href="formulaire.php">S'inscrire</a></li>
+            <li class="<?php if($pageActive == 'admin') echo 'active'; ?>"><a href="admin.php">Admin</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
