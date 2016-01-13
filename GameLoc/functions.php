@@ -1,6 +1,6 @@
 <?php
 
-// FONCTION LOG IN
+// FONCTION LOG IN && ADMIN
 
 		function checkLoggedIn(){
 			if (empty($_SESSION['user'])) {
