@@ -5,6 +5,9 @@
     session_start();
 
     require_once(__DIR__.'/config/db.php');
+    require_once(__DIR__.'/functions.php');
+
+    checkLoggedIn();
 
     //Ici on va faire inclure la liste des consoles dans la liste à puce
         $query = $pdo->prepare('SELECT * FROM platforms');
@@ -12,24 +15,60 @@
         $allPlatforms = $query->fetchAll();
 
 
-    
+    if (isset($_POST['action'])) {
+        
+        $gameSearch = trim(htmlentities($_POST['gameSearch']));
+        $gamePlatform = intval($_POST['gamePlatform']);
+
+   
+        if (isset($gameSearch) && isset($gamePlatform)){
+            
+            $query = $pdo->prepare('SELECT games.*,
+                                    platforms.name as platform_name FROM games 
+                                    INNER JOIN platforms ON platform_id = platforms.id 
+                                    WHERE title LIKE :gameSearch 
+                                    AND platform_id = :gamePlatform');
+            $query->bindValue(':gameSearch', '%'.$gameSearch.'%' , PDO::PARAM_STR);
+            $query->bindValue(':gamePlatform', $gamePlatform, PDO::PARAM_INT);
+            $query->execute();
+
+            $games = $query->fetchAll();
 
 
-    //Ici on bloque la logique en cas de recherche
-    if(isset($_GET['gameSearch'])){
-        $gameSearch = $_GET['gameSearch'];
+        }
 
-        $query = $pdo->prepare('SELECT games.*,
-                                platforms.name as platform_name
-                                FROM games INNER JOIN platforms ON platform_id = platforms.id 
-                                WHERE title LIKE :gameSearch');
-        $query->bindValue(':gameSearch', '%'.$gameSearch.'%' , PDO::PARAM_STR);
-        $query->execute();
+        elseif(!empty($_POST['gameSearch'])){
+            $gameSearch = $_POST['gameSearch'];
 
-        $games = $query->fetchAll();
+            $query = $pdo->prepare('SELECT games.*,
+                                    platforms.name as platform_name
+                                    FROM games INNER JOIN platforms ON platform_id = platforms.id 
+                                    WHERE title LIKE :gameSearch');
+            $query->bindValue(':gameSearch', '%'.$gameSearch.'%' , PDO::PARAM_STR);
+            $query->execute();
+
+            $games = $query->fetchAll();
+
+        }
+
+        elseif(!empty($_POST['gamePlatform'])){
+
+            $gamePlatform = $_POST['gamePlatform'];
+
+
+            $query = $pdo->prepare('SELECT games.*,
+                                    platforms.name as platform_name
+                                    FROM games INNER JOIN platforms ON platform_id = platforms.id 
+                                    WHERE platform_id = :gamePlatform');
+
+            $query->bindValue(':gamePlatform', $gamePlatform, PDO::PARAM_INT);
+            $query->execute();
+
+            $games = $query->fetchAll();
+
+        }
 
     }
-
 
     else{
         
@@ -44,10 +83,12 @@
         $limitGames = 4;
         $pagesGames = ceil($totalGames / $limitGames);
 
-        // 6. Récupérer la variable page envoyée en GET et l'affecter à $pageActiveGame
+        // 6. Récupérer la variable page envoyée en POST et l'affecter à $pageActiveGame
         if(isset($_GET['page'])) {
             $pageActiveGame = $_GET['page'];
+            
         }
+
         else {
             $pageActiveGame = 1;
         }
@@ -120,7 +161,7 @@
     <div class="col-md-3">
 
         <div id="searchForm">
-           <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+           <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
             <div class="form-group">
                 <label for="search">Rechercher</label>
@@ -134,7 +175,7 @@
                         <option>       </option>
 
                     <?php foreach ($allPlatforms as $keyplatforms => $platform): ?>
-                        <option><?php echo $platform['name'] ?></option>
+                        <option value="<?php echo $platform['id'] ;   ?>"><?php echo $platform['name'] ?></option>
                     <?php endforeach; ?>
 
                 </select>
@@ -145,7 +186,7 @@
                   <input type="checkbox" name="available"> Disponible de suite</label>
               </div>
 
-              <button class="btn btn-primary" type="submit" action="action" value="search">Rechercher</button>
+              <button class="btn btn-primary" type="submit" action="action" value="search" name="action">Rechercher</button>
 
           </form>
       </div>
@@ -164,8 +205,6 @@
 
             <?php if(!empty($games)): ?>
 
-
-
                 <?php foreach ($games as $keygames => $game): ?>
 
                     <div class="col-md-3" id="game<?php echo $game['id']; ?>">
@@ -181,7 +220,11 @@
                 <?php endforeach; ?>
 
             <?php else: ?>
-                <div class="alert alert-danger" role="alert">Aucun jeu dispo dans notre base de données</div>
+
+                <div class="alert alert-danger" role="alert">
+                <p>Désolé mais votre recherche ne retourne aucun résultat</p>
+                <a href="catalogue.php">Retour au catalogue complet</a>
+                </div>
 
             <?php endif; ?>
 
@@ -190,7 +233,7 @@
     </div><!-- Fin du container Games-->
 
 
-    <?php if(empty($_GET['gameSearch'])): ?>
+    <?php if(!isset($_POST['action'])) :?>
         <div = "container"> 
             <div class="row" id="row3"></div>
                 <div class=".col-xs-6 .col-md-4">   

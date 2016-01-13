@@ -3,11 +3,21 @@
 // FONCTION LOG IN
 
 		function checkLoggedIn(){
-		if (empty($_SESSION['user'])) {
-			header("Location: index.php");
-			die();
+			if (empty($_SESSION['user'])) {
+				header("Location: connexion.php");
+				die();
+			}
 		}
-	}
+
+		function checkAdmin(){
+			if($_SESSION['user']['role'] != 'admin') {
+		  		header("HTTP/1.0 403 Forbidden");
+		  		die('Cette page est réservé aux administreurs');
+		  	}
+		}
+
+
+
 
 
 
@@ -65,8 +75,6 @@
 
 
 }
-
-print_r(geocode('136, avenue pablo picasso 92000 nanterre'));
 
 
 
