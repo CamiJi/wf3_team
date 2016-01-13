@@ -29,8 +29,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.php">Accueil</a></li>
-            <li><a href="catalogue.php">Catalogue de Jeux</a></li>
+            <li class=""><a href="index.php">Accueil</a></li>
+            <li class="<?php if($pageActive == 'catalogue') echo 'active'; ?>"><a href="catalogue.php">Catalogue de Jeux</a></li>
             <li><a href="insertGame.php">Ajouter un jeu</a></li>
             <li><a href="admin.php">Admin</a></li>
           </ul>

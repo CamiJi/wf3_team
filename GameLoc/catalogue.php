@@ -9,6 +9,8 @@
 
     checkLoggedIn();
 
+    $pageActive = "catalogue";
+
     //Ici on va faire inclure la liste des consoles dans la liste à puce
         $query = $pdo->prepare('SELECT * FROM platforms');
         $query->execute();
