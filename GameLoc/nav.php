@@ -19,28 +19,29 @@
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
     <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
 
 
-            <?php require_once(__DIR__.'/nav.php'); ?>
-
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron" id="header">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
-        <a href="index.php"><img src="img/Steam-icon.png" ></a>
-        <h1>Bienvenue sur Gameloc.com</h1>
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.php">GameLoc</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="index.php">Accueil</a></li>
+            <li><a href="catalogue.php">Catalogue de Jeux</a></li>
+            <li><a href="insertGame.php">Ajouter un jeu</a></li>
+            <li><a href="admin.php">Admin</a></li>
+          </ul>
 
-        <p>Bienvenue dans la plus grande communauté de Gamers à Paris!</p>
-        <p>Le service de <b>mise en relation</b> de gamers à des fins d'<b>échanges et de prêts de jeux videos.</b></p>
-        <p>(PC,Xbox,PS4)</p>
-        <p><a class="btn btn-success" href="formulaire.php" role="button">Inscription</a><a class="btn btn-primary" href="connexion.php" role="button">Connexion</a></p>
-
-
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="connexion.php">Sign In</a></li>
+            <li class="active"><a href="index.php">Sign Out <span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
       </div>
-    </div>
-
+    </nav>
 
 
 

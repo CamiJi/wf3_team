@@ -148,11 +148,14 @@
         <![endif]-->
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
+
+    <?php require_once(__DIR__.'/nav.php'); ?>
+
+
     <div class="jumbotron" id="header">
       <div class="container">
         <a href="index.php"><img src="img/Steam-icon.png" ></a>
-        <h1>Gameloc</h1>
-        <p>Catalogue de jeux!</p>
+        <h1>Catalogue de jeux</h1>
     </div>
 </div>
 

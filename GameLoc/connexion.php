@@ -43,6 +43,8 @@
             <button type="submit" class="btn btn-success">Sign in</button>
           </form> -->
 
+              <?php require_once(__DIR__.'/nav.php'); ?>
+
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron" id="header">
       <div class="container">
