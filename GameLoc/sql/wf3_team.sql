@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 12 Janvier 2016 à 15:32
+-- Généré le :  Jeu 14 Janvier 2016 à 10:00
 -- Version du serveur :  5.6.25
 -- Version de PHP :  5.6.11
 
@@ -101,19 +101,23 @@ CREATE TABLE IF NOT EXISTS `users` (
   `tel` varchar(10) NOT NULL,
   `lat` varchar(15) DEFAULT NULL,
   `lng` varchar(15) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `expire_token` datetime DEFAULT NULL,
+  `ip` varchar(20) DEFAULT NULL,
   `role` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `created_at`, `updated_at`, `name`, `firstname`, `address`, `zipcode`, `city`, `tel`, `lat`, `lng`, `role`) VALUES
-(1, 'aubertcam@gmail.com', '$2y$10$HvjPrF1QHsK9bAYI4eNciO5MzH5Xn5k3ECRZWQ2eoan8/40ZDNFmi', '2016-01-11 15:51:40', '2016-01-11 15:51:40', '', '', '', '', '', '', NULL, NULL, ''),
-(2, 'camoulox@hotmail.com', '$2y$10$Do1l987SZSZ8E2Ol5KBq8u9QSZGD0r9CSrt2pDHVH6cE6LKriANvm', '2016-01-11 16:50:53', '2016-01-11 16:50:53', 'Aubio', 'Camos', '43 quai de Valmy', '75010', 'Paris', '0622458741', NULL, NULL, ''),
-(3, 'olivier.dutranois@gmail.com', '$2y$10$4uHu3mRALSYbPT3x/cebYOGqXGl5f1zLKQD4N/QVTnrrAV.mgvdRK', '2016-01-11 16:58:16', '2016-01-11 16:58:16', 'Dutranois', 'Olivier', '5 rue du pressoir', '95400', 'Villiers le Bel', '0622417852', NULL, NULL, ''),
-(4, 'camimos@hoti.com', '$2y$10$dZ91l1O31AVmijVnGQXjlOLp7mcgPClWpsOsdcqAj4E2HJ7DEFqV6', '2016-01-11 17:08:44', '2016-01-11 17:08:44', 'Zibou', 'Cajou', '43 quai de Valmy', '75010', 'Paris', '0622458741', '48.8695034', '2.366272', NULL),
-(5, 'riton@hotmail.com', '$2y$10$HU7htIdILOW41J8JSas/Dubl6gwMqSz5d134urxXNd2ivSAzVPqYu', '2016-01-11 17:14:49', '2016-01-11 17:14:49', 'Aubio', 'Camos', '43 quai de Valmy', '75010', 'Paris', '0622458741', '48.8695034', '2.366272', NULL);
+INSERT INTO `users` (`id`, `email`, `password`, `created_at`, `updated_at`, `name`, `firstname`, `address`, `zipcode`, `city`, `tel`, `lat`, `lng`, `token`, `expire_token`, `ip`, `role`) VALUES
+(1, 'aubertcam@gmail.com', '$2y$10$HvjPrF1QHsK9bAYI4eNciO5MzH5Xn5k3ECRZWQ2eoan8/40ZDNFmi', '2016-01-11 15:51:40', '2016-01-11 15:51:40', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, 'admin'),
+(2, 'camoulox@hotmail.com', '$2y$10$Do1l987SZSZ8E2Ol5KBq8u9QSZGD0r9CSrt2pDHVH6cE6LKriANvm', '2016-01-11 16:50:53', '2016-01-11 16:50:53', 'Aubio', 'Camos', '43 quai de Valmy', '75010', 'Paris', '0622458741', NULL, NULL, NULL, NULL, NULL, 'member'),
+(3, 'olivier.dutranois@gmail.com', '$2y$10$4uHu3mRALSYbPT3x/cebYOGqXGl5f1zLKQD4N/QVTnrrAV.mgvdRK', '2016-01-11 16:58:16', '2016-01-11 16:58:16', 'Dutranois', 'Olivier', '5 rue du pressoir', '95400', 'Villiers le Bel', '0622417852', NULL, NULL, NULL, NULL, NULL, 'member'),
+(4, 'camimos@hoti.com', '$2y$10$dZ91l1O31AVmijVnGQXjlOLp7mcgPClWpsOsdcqAj4E2HJ7DEFqV6', '2016-01-11 17:08:44', '2016-01-11 17:08:44', 'Zibou', 'Cajou', '43 quai de Valmy', '75010', 'Paris', '0622458741', '48.8695034', '2.366272', NULL, NULL, NULL, 'member'),
+(5, 'riton@hotmail.com', '$2y$10$HU7htIdILOW41J8JSas/Dubl6gwMqSz5d134urxXNd2ivSAzVPqYu', '2016-01-11 17:14:49', '2016-01-11 17:14:49', 'Aubio', 'Camos', '43 quai de Valmy', '75010', 'Paris', '0622458741', '48.8695034', '2.366272', NULL, NULL, NULL, 'member'),
+(6, 'jadibou@hotmail.com', '$2y$10$w/pOiswOZJbJ8CUrGyDvFubmcUjtwPcy1.VoCngeFn9iqwezw5t2S', '2016-01-13 17:06:56', '2016-01-13 17:06:56', 'Riton', 'Jonoux', '2 chemin de l''Ouche', '71640', 'Saint Jean de Vaux', '0641874712', '46.808799', '4.6978891', NULL, NULL, NULL, NULL);
 
 --
 -- Index pour les tables exportées
@@ -159,7 +163,7 @@ ALTER TABLE `platforms`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Contraintes pour les tables exportées
 --
