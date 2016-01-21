@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 14 Janvier 2016 à 10:00
+-- Généré le :  Jeu 21 Janvier 2016 à 16:56
 -- Version du serveur :  5.6.25
 -- Version de PHP :  5.6.11
 
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `created_at`, `updated_at`, `name`, `firstname`, `address`, `zipcode`, `city`, `tel`, `lat`, `lng`, `token`, `expire_token`, `ip`, `role`) VALUES
-(1, 'aubertcam@gmail.com', '$2y$10$HvjPrF1QHsK9bAYI4eNciO5MzH5Xn5k3ECRZWQ2eoan8/40ZDNFmi', '2016-01-11 15:51:40', '2016-01-11 15:51:40', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, 'admin'),
+(1, 'aubertcam@gmail.com', '$2y$10$HvjPrF1QHsK9bAYI4eNciO5MzH5Xn5k3ECRZWQ2eoan8/40ZDNFmi', '2016-01-11 15:51:40', '2016-01-11 15:51:40', '', '', '', '', '', '', NULL, NULL, 'b76ec6ab86b1e45c11e42742483882da', '2016-01-20 15:19:47', '::1', 'admin'),
 (2, 'camoulox@hotmail.com', '$2y$10$Do1l987SZSZ8E2Ol5KBq8u9QSZGD0r9CSrt2pDHVH6cE6LKriANvm', '2016-01-11 16:50:53', '2016-01-11 16:50:53', 'Aubio', 'Camos', '43 quai de Valmy', '75010', 'Paris', '0622458741', NULL, NULL, NULL, NULL, NULL, 'member'),
 (3, 'olivier.dutranois@gmail.com', '$2y$10$4uHu3mRALSYbPT3x/cebYOGqXGl5f1zLKQD4N/QVTnrrAV.mgvdRK', '2016-01-11 16:58:16', '2016-01-11 16:58:16', 'Dutranois', 'Olivier', '5 rue du pressoir', '95400', 'Villiers le Bel', '0622417852', NULL, NULL, NULL, NULL, NULL, 'member'),
 (4, 'camimos@hoti.com', '$2y$10$dZ91l1O31AVmijVnGQXjlOLp7mcgPClWpsOsdcqAj4E2HJ7DEFqV6', '2016-01-11 17:08:44', '2016-01-11 17:08:44', 'Zibou', 'Cajou', '43 quai de Valmy', '75010', 'Paris', '0622458741', '48.8695034', '2.366272', NULL, NULL, NULL, 'member'),
