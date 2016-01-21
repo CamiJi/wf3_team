@@ -50,7 +50,7 @@ if(isset($_POST['action'])) {
             // si mise a jour Ok
             if($query->rowCount() > 0) {
                 // generation du lien pour reset le password
-                $resetLink = 'http://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['PHP_SELF']).'resetPassword.php?token='.$token.'&email='.$email;
+                $resetLink = 'http://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['PHP_SELF']).'/resetPassword.php?token='.$token.'&email='.$email;
 
                 // echo $resetLink; die();
 
@@ -127,6 +127,8 @@ else {
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
             <![endif]-->
+
+                    <?php require_once(__DIR__.'/nav.php'); ?>
 
 
 
